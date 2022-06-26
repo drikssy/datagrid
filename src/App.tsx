@@ -4,7 +4,6 @@ import { process, State } from "@progress/kendo-data-query";
 import products from './products.json';
 import * as React from 'react';
 import {getPools} from "./db/repository";
-import {connectToDb, disconnectFromDb} from "./db/connection";
 import {useEffect} from "react";
 import {PoolInterface} from "./models/models";
 
@@ -19,7 +18,7 @@ const initialDataState: State = {
   skip: 0,
 };
 
-const CustomCell = (props) => {
+const CustomCell = (props: any) => {
   const field = props.field || "";
   const value = props.dataItem[field];
   const bgColorRender = value ? "#2ecc71" : "#e74c3c"
@@ -36,10 +35,8 @@ const App = () => {
   const [pools, setPools] = React.useState([] as PoolInterface[]);
   useEffect(() => {
     const searchPools = async() => {
-      await connectToDb();
       const pools = await getPools();
       setPools(pools);
-      await disconnectFromDb();
       console.log(pools)
     }
       searchPools();
@@ -53,35 +50,39 @@ const App = () => {
       // style={{
       //   height: "400px",
       // }}
-      data={process(products, dataState)}
+      data={process(pools, dataState)}
       {...dataState}
       onDataStateChange={(e) => {
         setDataState(e.dataState);
       }}
     >
-      <GridColumn field="ProductID" title="ID" width="80px" filterable={false} />
-      <GridColumn field="ProductName" title="Name" />
-      <GridColumn field="UnitPrice" title="Price" filter="numeric" width="250px" />
-      <GridColumn
-        field="UnitsInStock"
-        title="In stock"
-        filter="numeric"
-        width="250px"
-      />
-      <GridColumn
-        field="Discontinued" filter="boolean" width="250px" cell={(props) => (
-          <td>
-            <input
-              disabled={true}
-              type="checkbox"
-              checked={props.dataItem[props.field || ""]}
-            />
-          </td>
-        )}
-      />
-      <GridColumn
-        field="Discontinued" title="custom field" width="250px" filter="boolean" cell={CustomCell}
-      />
+      <GridColumn field="blockchain" title="Blockchain" filterable={false} />
+      <GridColumn field="projectName" title="Protocol" filterable={false} />
+      <GridColumn field="pairId" title="Pair" filterable={false} />
+      <GridColumn field="liquidity" title="TVL" width="250px"/>
+      <GridColumn field="APR30d" title="APR 30D" filter="numeric" width="250px" />
+      <GridColumn field="vol30d" title="Volume 30D" filter="numeric" width="250px" />
+      <GridColumn field="addLiquidityLink" title="Link" width="500px" />
+      {/*<GridColumn*/}
+      {/*  field="UnitsInStock"*/}
+      {/*  title="In stock"*/}
+      {/*  filter="numeric"*/}
+      {/*  width="250px"*/}
+      {/*/>*/}
+      {/*<GridColumn*/}
+      {/*  field="Discontinued" filter="boolean" width="250px" cell={(props) => (*/}
+      {/*    <td>*/}
+      {/*      <input*/}
+      {/*        disabled={true}*/}
+      {/*        type="checkbox"*/}
+      {/*        checked={props.dataItem[props.field || ""]}*/}
+      {/*      />*/}
+      {/*    </td>*/}
+      {/*  )}*/}
+      {/*/>*/}
+      {/*<GridColumn*/}
+      {/*  field="Discontinued" title="custom field" width="250px" filter="boolean" cell={CustomCell}*/}
+      {/*/>*/}
     </Grid>
   );
 };
