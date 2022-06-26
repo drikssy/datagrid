@@ -1,10 +1,14 @@
 import './App.css';
 import { Grid, GridColumn } from "@progress/kendo-react-grid";
-import { process } from "@progress/kendo-data-query";
+import { process, State } from "@progress/kendo-data-query";
 import products from './products.json';
 import * as React from 'react';
+import {getPools} from "./db/repository";
+import {connectToDb, disconnectFromDb} from "./db/connection";
+import {useEffect} from "react";
+import {PoolInterface} from "./models/models";
 
-const initialDataState = {
+const initialDataState: State = {
   sort: [
     {
       field: "code",
@@ -29,6 +33,18 @@ const CustomCell = (props) => {
 
 const App = () => {
   const [dataState, setDataState] = React.useState(initialDataState);
+  const [pools, setPools] = React.useState([] as PoolInterface[]);
+  useEffect(() => {
+    const searchPools = async() => {
+      await connectToDb();
+      const pools = await getPools();
+      setPools(pools);
+      await disconnectFromDb();
+      console.log(pools)
+    }
+      searchPools();
+
+  }, [])
   return (
     <Grid
       pageable={true}

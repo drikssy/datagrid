@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "lib": ["es2017", "dom"],
+    "module": "CommonJS",
+    "target": "ES2018",
+    "strict": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "types": ["@types/node"],
+    "typeRoots": ["./node_modules/@types", "./types"],
+  },
+  "include": ["./src/**/*.ts"],
+  "exclude": ["node_modules"]
+}
