@@ -1,5 +1,6 @@
 import {DataSnapshot, get, ref} from "firebase/database";
 import database from "./firebase/firebase";
+import {PoolInterface} from "../models/models";
 
 export async function getFarms() {
     return get(ref(database, 'farms')).then((snapshot: DataSnapshot) => {

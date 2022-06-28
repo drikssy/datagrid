@@ -7,13 +7,13 @@ export interface PoolInterface {
     pairToken1Name?: string;
     pairToken0Address?: string;
     pairToken1Address?: string;
-    liquidity?: number;
-    vol30d?: number;
-    vol7d?: number;
-    vol24h?: number;
-    APR30d?: number;
-    APR7d?: number;
-    APR24h?: number;
+    liquidity?: number | string;
+    vol30d?: number | string;
+    vol7d?: number | string;
+    vol24h?: number | string;
+    APR30d?: number | string;
+    APR7d?: number | string;
+    APR24h?: number | string;
 }
 
 export interface FarmInterface {
